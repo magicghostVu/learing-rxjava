@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFileLog" fileName="logs/appRolling.log"
+                     filePattern="logs/appRolling-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{ISO8601} %-5p [%t] (%F:%L) - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="boot.log" fileName="logs/boot.log"
+                     filePattern="logs/boot-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{ISO8601} %-5p [%t] (%F:%L) - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="socket.log" fileName="logs/socket.log"
+                     filePattern="logs/socket-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{ISO8601} %-5p [%t] (%F:%L) - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+
+        <Logger name="RollingFileLog">
+            <AppenderRef ref="RollingFileLog"/>
+        </Logger>
+
+        <Logger name="bootLogger">
+            <AppenderRef ref="boot.log" />
+        </Logger>
+
+        <Logger name="socketLogger">
+            <AppenderRef ref="socket.log" />
+        </Logger>
+
+    </Loggers>
+</Configuration>
