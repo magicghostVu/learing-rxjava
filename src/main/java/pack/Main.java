@@ -2,6 +2,8 @@ package pack;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.rxjavafx.observables.JavaFxObservable;
+import io.reactivex.rxjavafx.sources.ObservableValueSource;
 import logging.LoggingService;
 import org.apache.logging.log4j.Logger;
 
@@ -56,8 +58,8 @@ public class Main {
         LoggingService.getInstance().getLogger().info("Done");
         var o = Observable.interval(5L, TimeUnit.SECONDS);
 
-        o.subscribe(epoch -> {
-            LoggingService.getInstance().getLogger().info("epoch is {}", epoch);
+        o.subscribe(index -> {
+            LoggingService.getInstance().getLogger().info("epoch is {}", index);
         });
     }
 
@@ -65,6 +67,8 @@ public class Main {
         var y = createFromEmmiter();
 
         logger.info("y is {}", y);
+
+        //JavaFxObservable.actionEventsOf()
 
     }
 }
