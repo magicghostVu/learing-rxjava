@@ -2,9 +2,9 @@ package pack;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.rxjavafx.observables.JavaFxObservable;
-import io.reactivex.rxjavafx.sources.ObservableValueSource;
 import logging.LoggingService;
+import org.apache.commons.lang3.mutable.Mutable;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +13,49 @@ public class Main {
 
 
     private static Logger logger = LoggingService.getInstance().getLogger();
+
+
+    public static void useDefer() {
+
+        int start = 0;
+        MutableInt v = new MutableInt(10);
+
+        var b = Observable.defer(() -> {
+            return Observable.range(start, v.getValue());
+        });
+
+
+        var g = b.subscribe(i -> {
+            logger.info("o1 i is {}", i);
+        });
+
+        v.setValue(20);
+        var g2 = b.subscribe(ii -> {
+            logger.info("o2 i is {}", ii);
+        });
+
+
+    }
+
+    static void tryConnectableObservable() {
+        var coldO = Observable.<String>just("phuvh", "quyvv", "vint", "haonc");
+
+        var hotO = coldO.publish();
+
+        hotO.subscribe(v -> {
+            logger.info("v is {}", v);
+        });
+
+
+        hotO.map(String::length).subscribe(l -> {
+            logger.info("l is {}", l);
+        });
+
+        var t = hotO.connect();
+
+        logger.info("t is {}", t);
+
+    }
 
     static Disposable createFromEmmiter() {
 
@@ -64,11 +107,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        var y = createFromEmmiter();
-
-        logger.info("y is {}", y);
-
-        //JavaFxObservable.actionEventsOf()
-
+        useDefer();
     }
 }

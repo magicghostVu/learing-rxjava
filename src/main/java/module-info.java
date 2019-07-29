@@ -7,6 +7,7 @@ open module learing.rxjava {
     requires javafx.graphics;
     requires javafx.fxml;
     requires javafx.controls;
+    requires org.apache.commons.lang3;
     //exports testfx to javafx.graphics, javafx.fxml;
     //exports testfx to javafx.fxml;
 }
