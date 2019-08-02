@@ -3,10 +3,10 @@ package pack;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import logging.LoggingService;
-import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
@@ -14,6 +14,19 @@ public class Main {
 
     private static Logger logger = LoggingService.getInstance().getLogger();
 
+
+    private static void doMerge() {
+        var o1 = Observable.interval(500, TimeUnit.MILLISECONDS)
+                .map(l -> l * 500).map(Objects::toString);
+
+        var o2 = Observable.interval(1, TimeUnit.SECONDS).map(Objects::toString);
+
+
+        o1.mergeWith(o2).subscribe(i -> {
+            logger.info("i is {}s", i);
+        });
+
+    }
 
     public static void useDefer() {
 
@@ -33,6 +46,30 @@ public class Main {
         var g2 = b.subscribe(ii -> {
             logger.info("o2 i is {}", ii);
         });
+
+
+    }
+
+    private static void deplayOp() throws Exception {
+        var ob = Observable.<Integer>just(1, 2, 3, 4, 5)
+                .delay(300, TimeUnit.MILLISECONDS)
+                .subscribe(i -> {
+                    logger.info("i in delay is {}", i);
+                });
+
+        Thread.sleep(1000);
+    }
+
+    private static void takeOp() throws Exception {
+
+        var ol = Observable.interval(300, TimeUnit.MILLISECONDS);
+
+        ol.take(2000, TimeUnit.MILLISECONDS).takeLast(1).subscribe(i -> {
+            //run on rx thread pool
+            logger.info("i is {}", i);
+        });
+
+        Thread.sleep(5000);
 
 
     }
@@ -95,6 +132,13 @@ public class Main {
 
     }
 
+
+    private static void doCollect() {
+        Observable.range(0, 10).toList().subscribe(l -> {
+            logger.info("l is {}", l);
+        });
+    }
+
     private static void doStuff1() {
         var t = 0;
         System.out.println("okok");
@@ -106,7 +150,13 @@ public class Main {
         });
     }
 
-    public static void main(String[] args) {
-        useDefer();
+    public static void main(String[] args) throws Exception {
+        /*doMerge();
+        Thread.sleep(10000);*/
+
+        Integer h = 10000000;
+        Integer h2 = 10000000;
+
+        System.out.println();
     }
 }
