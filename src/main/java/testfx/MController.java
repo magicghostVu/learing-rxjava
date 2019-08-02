@@ -51,14 +51,14 @@ public class MController implements Initializable {
 
 
             return c.isSelected();
-        });/*.subscribe(t -> {
+        }).subscribe(t -> {
             LoggingService.getInstance().getLogger().info("i is {}", t);
             if (t) {
                 lableStatusCheck.setText("Checkbox is checked");
             } else {
                 lableStatusCheck.setText("checkbox is unchecked");
             }
-        });*/
+        });
 
         LoggingService.getInstance().getLogger().info("o1 is {}, o2 is {}", o1, observable);
 
