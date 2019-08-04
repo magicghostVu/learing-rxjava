@@ -15,6 +15,18 @@ public class Main {
     private static Logger logger = LoggingService.getInstance().getLogger();
 
 
+    private static void doGroup() {
+        var so = Observable.<String>just("Alpha", "beta", "phuvh", "Epsilon", "ajshdad");
+
+        so.groupBy(String::length).subscribe(v -> {
+            v.toList().subscribe(l -> {
+                logger.info("length {} val is {}", v.getKey(), l);
+            });
+        });
+
+
+    }
+
     private static void doMerge() {
         var o1 = Observable.interval(500, TimeUnit.MILLISECONDS)
                 .map(l -> l * 500).map(Objects::toString);
@@ -154,9 +166,6 @@ public class Main {
         /*doMerge();
         Thread.sleep(10000);*/
 
-        Integer h = 10000000;
-        Integer h2 = 10000000;
-
-        System.out.println();
+        doGroup();
     }
 }
