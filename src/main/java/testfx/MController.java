@@ -2,6 +2,8 @@ package testfx;
 
 import io.reactivex.Observable;
 import io.reactivex.rxjavafx.observables.JavaFxObservable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
+import io.reactivex.schedulers.Schedulers;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +32,8 @@ public class MController implements Initializable {
 
 
         //JavaFxObservable.
+
+
 
 
         var booleanProperties = checkBox.selectedProperty();
